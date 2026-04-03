@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .serializers import TodoSerializer, RegisterSerializer
+from .serializers import TodoSerializer, RegisterSerializer, UserSerializer
 from .services import create_todo, update_todo, delete_todo
 from .selectors import get_all_todos, get_todo_by_id
 
@@ -100,3 +100,10 @@ class RegisterView(APIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)

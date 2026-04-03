@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "./api/auth";
+import useCurrentUser from "./hooks/useCurrentUser";
 import {
   Container,
   Typography,
@@ -21,6 +22,8 @@ function App() {
     !!localStorage.getItem("access"),
   );
 
+  const { user, loading: userLoading } = useCurrentUser();
+
   const handleLogout = () => {
     logoutUser();
     setIsAuthenticated(false);
@@ -38,7 +41,9 @@ function App() {
           }}
         >
           <Typography variant="h3" fontWeight={700}>
-            Todo List
+            {isAuthenticated && !userLoading
+              ? `Todo List (${user.username})`
+              : "Todo List"}
           </Typography>
 
           <Button
