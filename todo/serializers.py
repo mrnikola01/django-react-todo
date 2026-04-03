@@ -4,9 +4,12 @@ from rest_framework import serializers
 from .models import Todo
 
 class TodoSerializer(serializers.ModelSerializer):
+    owner_id = serializers.IntegerField(source='owner.id', read_only=True)
+    owner_username = serializers.CharField(source='owner.username', read_only=True)
+
     class Meta:
         model = Todo
-        fields = ['id', 'title', 'description', 'completed']
+        fields = ['id', 'title', 'description', 'completed', 'owner_id', 'owner_username']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -36,4 +39,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email'] 
+        fields = ['id', 'username', 'is_staff']

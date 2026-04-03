@@ -1,10 +1,11 @@
 from .models import Todo
 
-def create_todo(data):
+def create_todo(validated_data, user):
     return Todo.objects.create(
-        title=data.get('title'),
-        description=data.get('description', ''),
-        completed=data.get('completed', False)
+        title=validated_data.get('title'),
+        description=validated_data.get('description', ''),
+        completed=validated_data.get('completed', False),
+        owner=user 
     )
 
 def update_todo(todo, data):
@@ -16,3 +17,5 @@ def update_todo(todo, data):
 
 def delete_todo(todo):
     todo.delete()
+
+    

@@ -23,7 +23,7 @@ class TodoListCreateView(APIView):
         serializer = TodoSerializer(data=request.data)
         
         if serializer.is_valid():
-            todo = create_todo(serializer.validated_data)
+            todo = create_todo(serializer.validated_data, request.user)
             output_serializer = TodoSerializer(todo)
 
             return Response(output_serializer.data, status=status.HTTP_201_CREATED)
@@ -49,6 +49,10 @@ class TodoDetailView(APIView):
         if not todo:
             return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
         
+        if todo.owner != request.user and not request.user.is_staff:
+            return Response({"error": "Not allowed"}, status=403)
+    
+        
         serializer = TodoSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -64,6 +68,9 @@ class TodoDetailView(APIView):
         if not todo:
             return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
         
+        if todo.owner != request.user and not request.user.is_staff:
+            return Response({"error": "Not allowed"}, status=403)
+        
         serializer = TodoSerializer(data=request.data, partial=True)
         
         if serializer.is_valid():
@@ -78,6 +85,9 @@ class TodoDetailView(APIView):
 
         if not todo:
             return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        if todo.owner != request.user and not request.user.is_staff:
+            return Response({"error": "Not allowed"}, status=403)
         
         delete_todo(todo)
         return Response(status=status.HTTP_204_NO_CONTENT)

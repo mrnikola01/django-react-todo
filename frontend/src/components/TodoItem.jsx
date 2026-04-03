@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 function TodoItem({
   todo,
@@ -26,6 +27,12 @@ function TodoItem({
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(todo.title);
   const [description, setDescription] = useState(todo.description || "");
+
+  const { user, loading: userLoading } = useCurrentUser();
+
+  if (userLoading) return null;
+  const canEditOrDelete =
+    isAuthenticated && user && (user.id === todo.owner_id || user.is_staff);
 
   const handleSave = () => {
     onEdit({ ...todo, title, description });
@@ -42,7 +49,7 @@ function TodoItem({
               color={todo.completed ? "success" : "warning"}
             />
 
-            {isAuthenticated && (
+            {canEditOrDelete && (
               <>
                 <IconButton onClick={() => setOpen((prev) => !prev)}>
                   <EditIcon />
@@ -56,7 +63,7 @@ function TodoItem({
           </Box>
         }
       >
-        {isAuthenticated && (
+        {canEditOrDelete && (
           <Checkbox checked={todo.completed} onChange={() => onToggle(todo)} />
         )}
 
@@ -75,7 +82,7 @@ function TodoItem({
         />
       </ListItem>
 
-      {isAuthenticated && (
+      {canEditOrDelete && (
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
