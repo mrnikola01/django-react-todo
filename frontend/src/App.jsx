@@ -42,7 +42,7 @@ function App() {
         >
           <Typography variant="h3" fontWeight={700}>
             {isAuthenticated && !userLoading
-              ? `Todo List (${user.username})`
+              ? `Todo List (${user?.username || ""})`
               : "Todo List"}
           </Typography>
 
