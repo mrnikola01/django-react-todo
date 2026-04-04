@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "./api/auth";
 import useCurrentUser from "./hooks/useCurrentUser";
@@ -17,16 +16,12 @@ import useFetch from "./hooks/useFetch";
 function App() {
   const { todos, setTodos, loading, error, addTodo } = useFetch();
   const navigate = useNavigate();
-
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("access"),
-  );
-
   const { user, loading: userLoading } = useCurrentUser();
+  const isAuthenticated = !!user;
 
   const handleLogout = () => {
     logoutUser();
-    setIsAuthenticated(false);
+    navigate("/login");
   };
 
   return (
@@ -41,11 +36,8 @@ function App() {
           }}
         >
           <Typography variant="h3" fontWeight={700}>
-            {isAuthenticated && !userLoading
-              ? `Todo List (${user?.username || ""})`
-              : "Todo List"}
+            {`Todo List${user?.username ? ` (${user.username})` : ""}`}
           </Typography>
-
           <Button
             variant="contained"
             color={isAuthenticated ? "error" : "primary"}
@@ -54,9 +46,7 @@ function App() {
             {isAuthenticated ? "Logout" : "Login"}
           </Button>
         </Box>
-
         {isAuthenticated && <AddTodo onAdd={addTodo} />}
-
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
             <CircularProgress />
