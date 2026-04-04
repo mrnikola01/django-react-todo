@@ -38,7 +38,7 @@ function TodoList({ todos, setTodos, user, userLoading }) {
     }
   };
 
-  const isAuthenticated = !!localStorage.getItem("access");
+  const isAuthenticated = !!user;
 
   return (
     <Card elevation={3} sx={{ mt: 4, borderRadius: 3 }}>

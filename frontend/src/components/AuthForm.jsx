@@ -30,9 +30,6 @@ function AuthForm({ type = "login" }) {
         await registerUser({ username, password });
         navigate("/login");
       }
-
-      setUsername("");
-      setPassword("");
     } catch (err) {
       setError(
         err?.detail ||
