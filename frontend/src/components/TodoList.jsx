@@ -2,7 +2,7 @@ import { Alert, Card, CardContent, List, Typography } from "@mui/material";
 import { updateTodo, deleteTodo } from "../api/todos";
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, setTodos }) {
+function TodoList({ todos, setTodos, user, userLoading }) {
   const handleToggle = async (todo) => {
     try {
       const updated = await updateTodo(todo.id, {
@@ -59,6 +59,8 @@ function TodoList({ todos, setTodos }) {
                 onToggle={handleToggle}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                user={user}
+                userLoading={userLoading}
                 isAuthenticated={isAuthenticated}
               />
             ))}

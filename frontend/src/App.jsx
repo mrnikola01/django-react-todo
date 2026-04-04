@@ -66,7 +66,12 @@ function App() {
             {error}
           </Alert>
         ) : (
-          <TodoList todos={todos} setTodos={setTodos} />
+          <TodoList
+            todos={todos}
+            setTodos={setTodos}
+            user={user}
+            userLoading={userLoading}
+          />
         )}
       </Box>
     </Container>

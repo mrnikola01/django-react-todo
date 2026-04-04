@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useCurrentUser from "../hooks/useCurrentUser";
 
 function TodoItem({
   todo,
@@ -22,13 +21,13 @@ function TodoItem({
   onToggle,
   onDelete,
   onEdit,
+  user,
+  userLoading,
   isAuthenticated,
 }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(todo.title);
   const [description, setDescription] = useState(todo.description || "");
-
-  const { user, loading: userLoading } = useCurrentUser();
 
   if (userLoading) return null;
   const canEditOrDelete =

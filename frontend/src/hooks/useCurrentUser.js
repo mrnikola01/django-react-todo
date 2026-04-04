@@ -16,5 +16,5 @@ export default function useCurrentUser() {
     getUser();
   }, []);
 
-  return { user, setUser, loading };
+  return { user, loading };
 }
