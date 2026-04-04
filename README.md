@@ -1,8 +1,8 @@
 ---
 
-# Django + React Todo App (JWT Auth)
+# Django + React Todo
 
-A modern, full-stack Task Management application. This project features a decoupled architecture with a **Django 6** REST API and a **React 19** frontend powered by **Vite**.
+A full-stack Todo application. This project features a decoupled architecture with a **Django 6** REST API and a **React 19** frontend powered by **Vite**.
 
 ## Tech Stack
 
@@ -34,9 +34,11 @@ Navigate to the root directory (`django-react-todo`):
 uv venv .venv
 
 # Activate the environment
-# Windows:
+
+## Windows:
 .venv\Scripts\activate
-# Mac/Linux:
+
+## Mac/Linux:
 source .venv/bin/activate
 
 # Install dependencies
@@ -73,6 +75,22 @@ _The UI will be available at: `http://localhost:5173`_
 
 ---
 
+### 3. Environment Variables (Frontend)
+
+To allow the React frontend to communicate with the Django API, you must configure the environment variables within the `frontend/` directory:
+
+1. Navigate to the `frontend/` folder.
+2. Create a file named `.env`.
+3. Add the following line (adjust the port if your Django server uses a different one):
+
+```ini
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+> **Note:** Vite requires all environment variables to be prefixed with `VITE_` to be accessible in the client-side code via `import.meta.env.VITE_API_URL`.
+
+---
+
 ## Authentication Flow
 
 The application uses **JWT** for secure communication and supports user registration:
@@ -105,5 +123,6 @@ django-react-todo/
 
 - **CORS Configuration:** If you change the frontend port, update `CORS_ALLOWED_ORIGINS` in `config/settings.py`.
 - **Package Management:** When adding new Python packages, use `uv pip install <package>` and update the file with `uv pip freeze > requirements.txt`.
+- **API Configuration:** The application now dynamically pulls the `BASE_URL` from the `.env` file. This ensures that the backend address can be changed (e.g., for deployment) without modifying the source code.
 
 ---
