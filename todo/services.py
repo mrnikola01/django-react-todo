@@ -1,21 +1,15 @@
 from .models import Todo
 
-def create_todo(validated_data, user):
-    return Todo.objects.create(
-        title=validated_data.get('title'),
-        description=validated_data.get('description', ''),
-        completed=validated_data.get('completed', False),
-        owner=user 
-    )
+def create_todo(*, validated_data: dict, user) -> Todo:
+    return Todo.objects.create(**validated_data, owner=user)
 
-def update_todo(todo, data):
-    todo.title = data.get('title', todo.title)
-    todo.description = data.get('description', todo.description)
-    todo.completed = data.get('completed', todo.completed)
-    todo.save()
+def update_todo(*, todo: Todo, data: dict) -> Todo:
+    allowed_fields = {'title', 'description', 'completed'}
+    for field, value in data.items():
+        if field in allowed_fields:
+            setattr(todo, field, value)
+    todo.save(update_fields=list(data.keys() & allowed_fields))
     return todo
 
-def delete_todo(todo):
+def delete_todo(*, todo: Todo) -> None:
     todo.delete()
-
-    
