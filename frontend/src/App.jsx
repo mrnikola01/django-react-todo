@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import TodoList from "./components/TodoList";
 import AddTodo from "./components/AddTodo";
-import useFetch from "./hooks/useFetch";
+import useTodos from "./hooks/useTodos";
 
 function App() {
-  const { todos, setTodos, loading, error, addTodo } = useFetch();
+  const { todos, setTodos, loading, error, addTodo } = useTodos();
   const navigate = useNavigate();
   const { user, loading: userLoading } = useCurrentUser();
   const isAuthenticated = !!user;

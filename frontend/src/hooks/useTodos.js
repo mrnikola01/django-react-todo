@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTodos } from "../api/todos";
 
-export default function useFetch() {
+export default function useTodos() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

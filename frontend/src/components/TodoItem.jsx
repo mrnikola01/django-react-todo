@@ -23,18 +23,13 @@ function TodoItem({
   onEdit,
   user,
   userLoading,
-  isAuthenticated,
 }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(todo.title);
   const [description, setDescription] = useState(todo.description || "");
 
-  if (userLoading) return null;
   const canEditOrDelete =
-    !userLoading &&
-    isAuthenticated &&
-    user &&
-    (user.id === todo.owner_id || user.is_staff);
+    !userLoading && user && (user.id === todo.owner_id || user.is_staff);
 
   const handleSave = () => {
     onEdit({ ...todo, title, description });
