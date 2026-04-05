@@ -31,7 +31,10 @@ function TodoItem({
 
   if (userLoading) return null;
   const canEditOrDelete =
-    isAuthenticated && user && (user.id === todo.owner_id || user.is_staff);
+    !userLoading &&
+    isAuthenticated &&
+    user &&
+    (user.id === todo.owner_id || user.is_staff);
 
   const handleSave = () => {
     onEdit({ ...todo, title, description });
