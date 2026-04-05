@@ -42,9 +42,23 @@ function AuthForm({ type = "login" }) {
 
   return (
     <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>
-        {isLogin ? "Login" : "Register"}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Typography variant="h5">{isLogin ? "Login" : "Register"}</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/")}
+        >
+          Home
+        </Button>
+      </Box>
 
       <TextField
         fullWidth
