@@ -14,9 +14,9 @@ import AddTodo from "./components/AddTodo";
 import useTodos from "./hooks/useTodos";
 
 function App() {
-  const { todos, setTodos, loading, error, addTodo } = useTodos();
-  const navigate = useNavigate();
   const { user, loading: userLoading } = useCurrentUser();
+  const { todos, setTodos, loading, error, addTodo } = useTodos(userLoading);
+  const navigate = useNavigate();
   const isAuthenticated = !!user;
 
   const handleLogout = () => {

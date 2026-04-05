@@ -47,3 +47,23 @@ export const logoutUser = () => {
 export const getAccessToken = () => {
   return localStorage.getItem("access");
 };
+
+export const refreshAccessToken = async () => {
+  const refresh = localStorage.getItem("refresh");
+  if (!refresh) return null;
+
+  const res = await fetch(`${BASE_URL}/token/refresh/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ refresh }),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    localStorage.setItem("access", data.access);
+    return data.access;
+  }
+
+  logoutUser();
+  return null;
+};
