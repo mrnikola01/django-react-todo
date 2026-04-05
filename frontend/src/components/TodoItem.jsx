@@ -75,7 +75,15 @@ function TodoItem({
               {todo.title}
             </Typography>
           }
-          secondary={todo.description || "No description"}
+          secondary={
+            <>
+              <span>{todo.description || "No description"}</span>
+              <br />
+              <span style={{ fontSize: 12, color: "gray" }}>
+                Created by: {todo.owner_username}
+              </span>
+            </>
+          }
         />
       </ListItem>
 
